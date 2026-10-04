@@ -19,6 +19,7 @@
 	import { refreshLanguage } from '$lib/i18n';
 	import MissingProfilesDialog from '$lib/components/dialogs/MissingProfilesDialog.svelte';
 	import { darkMode } from '$lib/state/theme.svelte';
+	import prefsStore from '$lib/state/prefs.svelte';
 
 	type Props = {
 		children?: Snippet;
@@ -31,6 +32,10 @@
 
 	onMount(() => {
 		refreshLanguage();
+
+		// load the preferences once so that components all over the app (e.g. the
+		// readme preview) can react to them
+		void prefsStore.refresh();
 
 		$effect(() => {
 			profiles.active;

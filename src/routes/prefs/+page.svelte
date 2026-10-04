@@ -29,8 +29,9 @@
 	import ColorPrefs from '$lib/components/prefs/ColorPrefs.svelte';
 	import ExportFilesDialog from '$lib/components/dialogs/ExportFilesDialog.svelte';
 	import Button from '$lib/components/ui/Button.svelte';
+	import prefsStore from '$lib/state/prefs.svelte';
 
-	let prefs: Prefs | null = $state(null);
+	let prefs = $derived(prefsStore.value);
 	let gamePrefs: GamePrefs | null = $state(null);
 
 	let gameSlug = $derived(games.active?.slug ?? '');
@@ -70,7 +71,7 @@
 			update(value, prefs);
 			prefs.gamePrefs.set(gameSlug, gamePrefs!);
 			try {
-				await api.prefs.set(prefs);
+				await prefsStore.save();
 			} catch (error) {
 				await refresh();
 				throw error;
@@ -79,9 +80,7 @@
 	}
 
 	async function refresh() {
-		let newPrefs = await api.prefs.get();
-		newPrefs.gamePrefs = new Map(Object.entries(newPrefs.gamePrefs));
-		prefs = newPrefs;
+		await prefsStore.refresh();
 	}
 </script>
 
@@ -117,6 +116,14 @@
 			value={prefs.zoomFactor}
 			set={set((value, prefs) => (prefs.zoomFactor = value))}
 		/>
+
+		<TogglePref
+			label={m.prefs_appearance_readmeHeading_title()}
+			value={prefs.hideReadmeH1}
+			set={set((value, prefs) => (prefs.hideReadmeH1 = value))}
+		>
+			{m.prefs_appearance_readmeHeading_content()}
+		</TogglePref>
 
 		<div class="my-1 flex items-center">
 			<Label>{m.prefs_appearance_darkMode_title()}</Label>
@@ -155,6 +162,15 @@
 				>{m.prefs_miscellaneous_fetchMods_content_3()}</b
 			>.
 		</TogglePref>
+
+		<TogglePref
+			label={m.prefs_miscellaneous_systemProxy_title()}
+			value={prefs.useSystemProxy}
+			set={set((value, prefs) => (prefs.useSystemProxy = value))}
+		>
+			{m.prefs_miscellaneous_systemProxy_content()}
+		</TogglePref>
+
 		<TogglePref
 			label={m.backendPref_other_server_title()}
 			value={!prefs.backendSkipConfirm}

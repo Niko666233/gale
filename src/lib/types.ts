@@ -376,6 +376,10 @@ export type Prefs = {
 	language: string;
 	gamePrefs: Map<string, GamePrefs>;
 	backendSkipConfirm: boolean;
+	/** Whether to hide level 1 headings (`# ...`) in mod readme previews. */
+	hideReadmeH1: boolean;
+	/** Whether HTTP requests are allowed to go through the system proxy. */
+	useSystemProxy: boolean;
 };
 
 export enum Backends {

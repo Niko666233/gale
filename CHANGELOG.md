@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.23.1-1 (2026-10-04)
+
+Fork release — [Niko666233/gale](https://github.com/Niko666233/gale), based on upstream 1.23.1.
+
+### Added
+
+- Setting to display level 1 headings (`# Heading`) in mod readme previews, which upstream strips unconditionally ([#549](https://github.com/Kesomannen/gale/issues/549)). Defaults to showing them — _Settings → Appearance → Hide readme level 1 headings_
+- Setting to control whether HTTP requests may use the system proxy — _Settings → Miscellaneous → Use system proxy_ (enabled by default, matching upstream)
+
+### Changed
+
+- The in-app updater now points at this fork's releases (`latest.json`) instead of the upstream gist, and verifies signatures with a fork-specific key, so upstream builds are no longer offered
+- Fixed vite's file watcher crashing with `EBUSY` on Windows when cargo holds files under `src-tauri/target`, which prevented `pnpm tauri dev` from starting
+- Removed the upstream `.github` directory; this fork is built and published manually
+
+### Notes
+
+- Everything in this release (code and documentation) was written by an AI assistant (Hermes Agent), then reviewed and tested by hand before publishing
+- The updater signing key is not part of this repository; losing it means future releases cannot be signed
+
 ## Unreleased
 
 ### Fixed

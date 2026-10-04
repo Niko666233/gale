@@ -1,5 +1,5 @@
 use std::{
-    sync::{Arc, Mutex, MutexGuard},
+    sync::{Arc, Mutex, MutexGuard, RwLock},
     time::Duration,
 };
 
@@ -18,7 +18,7 @@ use crate::{
 };
 
 pub struct AppState {
-    http: reqwest_middleware::ClientWithMiddleware,
+    http: RwLock<reqwest_middleware::ClientWithMiddleware>,
     prefs: Mutex<Prefs>,
     manager: Mutex<ModManager>,
     thunderstore: Mutex<Thunderstore>,
@@ -42,14 +42,23 @@ impl AppState {
     pub fn lock_thunderstore(&self) -> MutexGuard<'_, Thunderstore> {
         self.thunderstore.lock().unwrap()
     }
+
+    /// Rebuilds the http client so that it starts (or stops) using the system
+    /// proxy. In-flight requests keep using the previous client.
+    pub fn set_use_system_proxy(&self, use_system_proxy: bool) -> Result<()> {
+        let client = create_http_client(use_system_proxy)?;
+        *self.http.write().unwrap() = client;
+
+        Ok(())
+    }
 }
 
 pub fn setup(app: &AppHandle) -> Result<()> {
-    let http = create_http_client().context("failed to init http client")?;
-
     let (db, db_existed) = db::init().context("failed to init database")?;
 
     let (data, mut prefs, creds, migrated) = db.read()?;
+
+    let http = create_http_client(prefs.use_system_proxy).context("failed to init http client")?;
 
     prefs.init(&db, app).context("failed to init prefs")?;
 
@@ -58,7 +67,7 @@ pub fn setup(app: &AppHandle) -> Result<()> {
 
     let state = AppState {
         db,
-        http,
+        http: RwLock::new(http),
         prefs: Mutex::new(prefs),
         manager: Mutex::new(manager),
         thunderstore: Mutex::new(thunderstore),
@@ -83,14 +92,21 @@ pub fn setup(app: &AppHandle) -> Result<()> {
 const CONNECT_TIMEOUT: Duration = Duration::from_secs(30);
 const READ_TIMEOUT: Duration = Duration::from_secs(30);
 
-fn create_http_client() -> Result<reqwest_middleware::ClientWithMiddleware> {
-    let base = reqwest::Client::builder()
+fn create_http_client(use_system_proxy: bool) -> Result<reqwest_middleware::ClientWithMiddleware> {
+    let mut builder = reqwest::Client::builder()
         .user_agent(concat!("Kesomannen-Gale/", env!("CARGO_PKG_VERSION")))
         // without these, a stalled connection would hang the request (and thus the
         // install queue) indefinitely, instead of failing so that we can retry it
         .connect_timeout(CONNECT_TIMEOUT)
-        .read_timeout(READ_TIMEOUT)
-        .build()?;
+        .read_timeout(READ_TIMEOUT);
+
+    if !use_system_proxy {
+        // disables the proxy that reqwest picks up from the environment and (on
+        // windows) the system registry settings
+        builder = builder.no_proxy();
+    }
+
+    let base = builder.build()?;
 
     let http = reqwest_middleware::ClientBuilder::new(base)
         .with(create_http_cache())
@@ -128,8 +144,8 @@ fn create_http_cache() -> http_cache_reqwest::Cache<CACacheManager> {
 pub trait ManagerExt<R> {
     fn app_state(&self) -> &AppState;
 
-    fn http(&self) -> &reqwest_middleware::ClientWithMiddleware {
-        &self.app_state().http
+    fn http(&self) -> reqwest_middleware::ClientWithMiddleware {
+        self.app_state().http.read().unwrap().clone()
     }
 
     fn lock_prefs(&self) -> MutexGuard<'_, Prefs> {

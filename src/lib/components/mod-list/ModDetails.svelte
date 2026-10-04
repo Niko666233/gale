@@ -26,6 +26,7 @@
 	import Tooltip from '../ui/Tooltip.svelte';
 	import games from '$lib/state/game.svelte';
 	import ContextMenuContent from '../ui/ContextMenuContent.svelte';
+	import prefsStore from '$lib/state/prefs.svelte';
 
 	type Props = {
 		mod: Mod;
@@ -68,6 +69,10 @@
 	const showBackend = $derived(!hideBackendProp && games.activeBackends.length > 1);
 
 	function formatReadme(readme: string) {
+		if (!prefsStore.value?.hideReadmeH1) {
+			return readme;
+		}
+
 		return readme
 			.split('\n')
 			.filter((line) => !line.startsWith('# '))

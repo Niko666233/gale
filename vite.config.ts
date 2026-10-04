@@ -12,5 +12,14 @@ export default defineConfig({
 		}),
 		tailwindcss(),
 		sveltekit()
-	]
+	],
+	server: {
+		watch: {
+			// cargo writes and locks files inside src-tauri/target while building and
+			// running the app; letting vite's file watcher descend into that directory
+			// crashes it with `EBUSY` on windows. tauri watches src-tauri itself, so
+			// nothing is lost by ignoring it here.
+			ignored: ['**/src-tauri/**']
+		}
+	}
 });

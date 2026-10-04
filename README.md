@@ -16,6 +16,20 @@ A powerful mod manager for [Thunderstore](https://thunderstore.io), built with [
 
 [...and more](https://github.com/Kesomannen/gale/wiki/Features)
 
+## Fork changes
+
+This is a personal fork of [Kesomannen/gale](https://github.com/Kesomannen/gale), maintained by [Niko666233](https://github.com/Niko666233). It is **not** affiliated with upstream, nothing here is submitted upstream, and builds are only published in this repository's [Releases](https://github.com/Niko666233/gale/releases) (grab `Gale_X.X.X_x64_en-US.msi` there).
+
+Two additions on top of upstream `1.23.1`:
+
+- **Level 1 readme headings can be shown again.** Upstream deliberately strips Markdown `# Heading` lines from the mod readme preview (see [issue #549](https://github.com/Kesomannen/gale/issues/549)). Here it is a setting: _Settings → Appearance → Hide readme level 1 headings_. It is **off by default**, so `# Heading` lines are displayed like any other heading.
+- **The system proxy can be turned off.** Upstream always lets HTTP requests use the system proxy (environment variables, and on Windows the system registry settings). Here it is a setting: _Settings → Miscellaneous → Use system proxy_. It is **on by default**, which matches upstream's behaviour; turn it off to make Gale connect directly.
+
+The in-app updater has been repointed from the upstream gist to this fork's `latest.json`, and signs with a fork-specific key. That way it will not offer or install upstream builds, which would silently remove the two changes above.
+
+> [!NOTE]
+> The changes in this fork (code and documentation) were written by an AI assistant (Hermes Agent) and reviewed and tested by hand before release. Upstream's own behaviour is untouched.
+
 ## Installation
 
 > [!WARNING]

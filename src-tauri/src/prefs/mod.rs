@@ -189,6 +189,10 @@ pub struct Prefs {
     pub pull_before_launch: bool,
     pub language: String,
     pub backend_skip_confirm: bool,
+    /// Whether level 1 headings (`# ...`) are hidden in mod readme previews.
+    pub hide_readme_h1: bool,
+    /// Whether HTTP requests are allowed to go through the system proxy.
+    pub use_system_proxy: bool,
 
     pub game_prefs: HashMap<String, GamePrefs>,
 }
@@ -252,6 +256,9 @@ impl Default for Prefs {
             zoom_factor: 1.0,
             language: "en".to_string(),
             backend_skip_confirm: false,
+
+            hide_readme_h1: false,
+            use_system_proxy: true,
 
             game_prefs: HashMap::new(),
         }
@@ -321,6 +328,15 @@ impl Prefs {
         self.fetch_mods_automatically = value.fetch_mods_automatically;
         self.pull_before_launch = value.pull_before_launch;
         self.backend_skip_confirm = value.backend_skip_confirm;
+        self.hide_readme_h1 = value.hide_readme_h1;
+
+        if self.use_system_proxy != value.use_system_proxy {
+            self.use_system_proxy = value.use_system_proxy;
+
+            app.app_state()
+                .set_use_system_proxy(value.use_system_proxy)
+                .context("failed to update http client")?;
+        }
 
         self.save(app.db()).context("failed save prefs")
     }
