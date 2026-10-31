@@ -18,7 +18,6 @@
 	import type { ProfileInfo, ManagedGameInfo } from '$lib/types';
 	import { refreshLanguage } from '$lib/i18n';
 	import MissingProfilesDialog from '$lib/components/dialogs/MissingProfilesDialog.svelte';
-	import { darkMode } from '$lib/state/theme.svelte';
 	import prefsStore from '$lib/state/prefs.svelte';
 
 	type Props = {
@@ -38,7 +37,7 @@
 		void prefsStore.refresh();
 
 		$effect(() => {
-			profiles.active;
+			profiles.activeId;
 			updateBanner.threshold = 0;
 		});
 

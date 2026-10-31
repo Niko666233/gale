@@ -165,6 +165,7 @@
 	{
 		"name": "R.E.P.O.",
 		"slug": "repo",
+		"r2dirName": "REPO",
 		"popular": true,
 		"modLoader": {
 			"name": "BepInEx"
@@ -177,6 +178,7 @@
 	},
 	{
 		"name": "ROUNDS",
+		"r2dirName": "ROUNDS",
 		"popular": true,
 		"modLoader": {
 			"name": "BepInEx"
@@ -1060,6 +1062,19 @@
 		}
 	},
 	{
+		"name": "Emberville",
+		"slug": "emberville",
+		"modLoader": {
+			"name": "BepInEx"
+		},
+		"platforms": {
+			"steam": {
+				"id": 2295170
+			}
+		},
+		"backends": ["Hexium"]
+	},
+	{
 		"name": "Enter the Gungeon",
 		"modLoader": {
 			"name": "BepInEx"
@@ -1275,6 +1290,18 @@
 		}
 	},
 	{
+		"name": "Graveyard Keeper 2",
+		"slug": "graveyard-keeper-2",
+		"modLoader": {
+			"name": "BepInEx"
+		},
+		"platforms": {
+			"steam": {
+				"id": 4358690
+			}
+		}
+	},
+	{
 		"name": "Green Hell VR",
 		"modLoader": {
 			"name": "BepInEx",
@@ -1443,6 +1470,18 @@
 		"platforms": {
 			"steam": {
 				"id": 1876590
+			}
+		}
+	},
+	{
+		"name": "In Falsus",
+		"slug": "in-falsus",
+		"modLoader": {
+			"name": "BepInEx"
+		},
+		"platforms": {
+			"steam": {
+				"id": 3971950
 			}
 		}
 	},
@@ -1822,6 +1861,18 @@
 		}
 	},
 	{
+		"name": "Nivalis Nights",
+		"slug": "nivalis-nights",
+		"modLoader": {
+			"name": "BepInEx"
+		},
+		"platforms": {
+			"steam": {
+				"id": 1488490
+			}
+		}
+	},
+	{
 		"name": "Odd Remedy",
 		"slug": "odd-remedy",
 		"modLoader": {
@@ -2068,9 +2119,7 @@
 				"id": 3011360
 			}
 		},
-		"backends": [
-			"Hexium"
-		]
+		"backends": ["Hexium"]
 	},
 	{
 		"name": "Project Arrhythmia",
@@ -2459,6 +2508,18 @@
 		"platforms": {
 			"steam": {
 				"id": 1330000
+			}
+		}
+	},
+	{
+		"name": "Stonewards",
+		"slug": "stonewards",
+		"modLoader": {
+			"name": "BepInEx"
+		},
+		"platforms": {
+			"steam": {
+				"id": 4502710
 			}
 		}
 	},
@@ -3066,5 +3127,18 @@
 				"id": 3121110
 			}
 		}
+	},
+	{
+		"name": "over the hill",
+		"slug": "over-the-hill",
+		"modLoader": {
+			"name": "MelonLoader"
+		},
+		"platforms": {
+			"steam": {
+				"id": 2929250
+			}
+		},
+		"backends": ["Hexium"]
 	}
 ]

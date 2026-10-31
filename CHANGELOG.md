@@ -1,5 +1,56 @@
 # Changelog
 
+## 1.23.3-1 (2026-10-31)
+
+Fork release — [Niko666233/gale](https://github.com/Niko666233/gale), synced with upstream 1.23.3.
+
+### Changed
+
+- Merged upstream 1.23.3 and 1.23.2 (see their entries below); the two fork settings — readme level 1 headings and system proxy — carry over unchanged
+- Version is now `1.23.3-1`; the MSI bundler only accepts numeric versions, so the fork revision is numeric and the `-fork.1` wording lives on the release tag
+
+### Notes
+
+- Everything in this release (code and documentation) was written by an AI assistant (Hermes Agent), then reviewed and tested by hand before publishing
+
+## 1.23.3 (2026-10-30)
+
+### Added
+
+- Option to manage local mods and keep additional mods and config files when updating synced profiles (thanks [jneb802](https://github.com/jneb802))
+
+### Changed
+
+- Thunderstore game icons are now always used when a game is available on Thunderstore
+- Icons for Hexium-exclusive games are now fetched from Hexium instead of vendored by Gale (thanks [@AzumattDev](https://github.com/AzumattDev))
+- `UserData` is now a recognized MelonLoader subdirectory, similar to `UserLibs`
+- Thunderstore images are now fetched from `ccdn.thunderstore.io` instead of the soon-to-be-deprecated `gcdn.thunderstore.io` (thanks [@ebkr](https://github.com/ebkr))
+
+### Fixed
+
+- Scrolling while dragging a mod sometimes causing the app to freeze
+- The mod drag overlay not being rendered due to a type error
+- r2modman profile import for R.E.P.O and ROUNDS (thanks [@MianReplicate](https://github.com/MianReplicate))
+- Added talk name permissions to the Flatpak build to hopefully solve issues with deep links not working
+- Changelog dialog sometimes scrolling down when opened
+- Profile mod switches being hidden by Windows High Contrast mode
+- Launching vanilla not fully disabling BepInEx and other mod loaders
+
+## 1.23.2 (2026-10-14)
+
+### Changed
+
+- A backup of the database is now created before running migrations
+- Minor UI changes
+
+### Fixed
+
+- File and URL open actions freezing the app in some environments
+- Scrollbars always being drawn on top of other elements on some Linux systems
+- `Uninstall` button on the unknown mods banner not working
+- Hexium mod icons being cached too aggressively, causing them to not update when the mod icon is updated
+- Author not being displayed for locally imported mods (thanks [@MarkN2000](https://github.com/MarkN2000))
+
 ## 1.23.1-1 (2026-10-04)
 
 Fork release — [Niko666233/gale](https://github.com/Niko666233/gale), based on upstream 1.23.1.
@@ -19,12 +70,6 @@ Fork release — [Niko666233/gale](https://github.com/Niko666233/gale), based on
 
 - Everything in this release (code and documentation) was written by an AI assistant (Hermes Agent), then reviewed and tested by hand before publishing
 - The updater signing key is not part of this repository; losing it means future releases cannot be signed
-
-## Unreleased
-
-### Fixed
-
-- File and URL open actions freezing the app in some environments
 
 ## 1.23.1 (2026-10-03)
 
