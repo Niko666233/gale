@@ -30,6 +30,8 @@ The in-app updater has been repointed from the upstream gist to this fork's `lat
 > [!NOTE]
 > The changes in this fork (code and documentation) were written by an AI assistant (Hermes Agent) and reviewed and tested by hand before release. Upstream's own behaviour is untouched.
 
+See [FORK.md](FORK.md) for how this fork is synced with upstream and how releases are built.
+
 ## Installation
 
 > [!WARNING]
