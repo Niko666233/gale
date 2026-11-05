@@ -37,10 +37,11 @@ They are almost always in the same places:
 Everything not listed here should stay identical to upstream:
 
 1. `src/lib/components/mod-list/ModDetails.svelte` — `formatReadme()` only strips `# ` lines when the preference is on.
-2. `src-tauri/src/prefs/mod.rs` — `hide_readme_h1` / `use_system_proxy` fields, their defaults, and the client rebuild in `Prefs::set`.
+2. `src-tauri/src/prefs/mod.rs` — `hide_readme_h1` / `use_system_proxy` / `pin_dependency_versions` fields, their defaults, and the client rebuild in `Prefs::set`.
+   `pin_dependency_versions` is threaded into `Thunderstore::dependencies(deps, pin_versions)` in `src-tauri/src/thunderstore/mod.rs`; everything else about dependency resolution is upstream's.
 3. `src-tauri/src/state.rs` — `RwLock<ClientWithMiddleware>`, `.no_proxy()` when the preference is off.
 4. `src/lib/state/prefs.svelte.ts` — app-wide preferences store, loaded in `src/routes/+layout.svelte`.
-5. `src/routes/prefs/+page.svelte` — the two toggles.
+5. `src/routes/prefs/+page.svelte` — the three toggles.
 6. `src-tauri/tauri.conf.json` — fork updater public key and endpoint.
 7. `vite.config.ts` — `server.watch.ignored: ['**/src-tauri/**']` (Windows `EBUSY` when cargo holds `target/`).
 8. `README.md` / `CHANGELOG.md` — fork section and AI disclosure.

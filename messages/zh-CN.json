@@ -415,6 +415,8 @@
 	"prefs_miscellaneous_fetchMods_content_2": "要手动触发获取操作，请前往 ",
 	"prefs_miscellaneous_fetchMods_content_3": "文件 > 拉取模组",
 	"prefs_miscellaneous_fetchMods_title": "自动拉取模组",
+	"prefs_miscellaneous_pinDependencies_content": "当 mod 指定了依赖的某个具体版本时，按该版本安装，而不是安装最新版。关闭后将始终安装每个依赖的最新可用版本。",
+	"prefs_miscellaneous_pinDependencies_title": "严格按照依赖指定的版本",
 	"prefs_miscellaneous_pullBeforeLaunch_content": "是否在启动游戏前从同步的档案中拉取更新。这可以确保您始终使用最新的模组版本。",
 	"prefs_miscellaneous_pullBeforeLaunch_title": "启动前拉取更新",
 	"prefs_miscellaneous_systemProxy_content": "是否允许网络请求（获取、下载、同步 mod）经过系统代理。如果代理影响了 Gale 的正常使用，请关闭此项。",

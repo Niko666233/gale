@@ -430,6 +430,8 @@
 	"prefs_miscellaneous_fetchMods_content_2": "To manually trigger a fetch, go to ",
 	"prefs_miscellaneous_fetchMods_content_3": "File > Fetch mods",
 	"prefs_miscellaneous_fetchMods_title": "Fetch mods automatically",
+	"prefs_miscellaneous_pinDependencies_content": "When a mod names a specific version of a dependency, install that exact version instead of the newest one. Disable this to always install the latest available version of each dependency.",
+	"prefs_miscellaneous_pinDependencies_title": "Install exact dependency versions",
 	"prefs_miscellaneous_pullBeforeLaunch_content": "Whether to pull updates from synced profiles before launching.",
 	"prefs_miscellaneous_pullBeforeLaunch_title": "Pull before launch",
 	"prefs_miscellaneous_systemProxy_content": "Whether network requests (fetching, downloading and syncing mods) may be routed through the system proxy. Disable this if a proxy is interfering with Gale.",

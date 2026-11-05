@@ -64,7 +64,7 @@ pub async fn import_local_mod(
 
             let mods = app
                 .lock_thunderstore()
-                .dependencies(deps_with_backend)
+                .dependencies(deps_with_backend, prefs.pin_dependency_versions)
                 .filter(|dep| !profile.has_mod(dep.package.uuid))
                 .map(std::convert::Into::into)
                 .collect::<Vec<_>>();

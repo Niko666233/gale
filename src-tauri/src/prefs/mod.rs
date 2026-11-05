@@ -193,6 +193,10 @@ pub struct Prefs {
     pub hide_readme_h1: bool,
     /// Whether HTTP requests are allowed to go through the system proxy.
     pub use_system_proxy: bool,
+    /// Whether a dependency is installed at exactly the version named in the
+    /// parent mod's dependency string. When `false`, the newest available
+    /// version of that package is installed instead.
+    pub pin_dependency_versions: bool,
 
     pub game_prefs: HashMap<String, GamePrefs>,
 }
@@ -259,6 +263,7 @@ impl Default for Prefs {
 
             hide_readme_h1: false,
             use_system_proxy: true,
+            pin_dependency_versions: true,
 
             game_prefs: HashMap::new(),
         }
@@ -329,6 +334,7 @@ impl Prefs {
         self.pull_before_launch = value.pull_before_launch;
         self.backend_skip_confirm = value.backend_skip_confirm;
         self.hide_readme_h1 = value.hide_readme_h1;
+        self.pin_dependency_versions = value.pin_dependency_versions;
 
         if self.use_system_proxy != value.use_system_proxy {
             self.use_system_proxy = value.use_system_proxy;

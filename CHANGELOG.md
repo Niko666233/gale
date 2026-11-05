@@ -1,5 +1,17 @@
 # Changelog
 
+## 1.23.3-2 (2026-10-31)
+
+Fork release — [Niko666233/gale](https://github.com/Niko666233/gale), still based on upstream 1.23.3.
+
+### Added
+
+- Setting to control how dependency versions are resolved — _Settings → Miscellaneous → Install exact dependency versions_. Enabled (the default, and upstream's behaviour) installs a dependency at the exact version named in the parent mod's dependency string; disabling it installs the newest available version of that package instead. Only newly installed dependencies are affected — anything already in the profile is left alone
+
+### Notes
+
+- Everything in this release (code and documentation) was written by an AI assistant (Hermes Agent), then reviewed and tested by hand before publishing
+
 ## 1.23.3-1 (2026-10-31)
 
 Fork release — [Niko666233/gale](https://github.com/Niko666233/gale), synced with upstream 1.23.3.

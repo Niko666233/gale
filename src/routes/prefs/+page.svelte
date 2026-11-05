@@ -180,6 +180,14 @@
 		</TogglePref>
 
 		<TogglePref
+			label={m.prefs_miscellaneous_pinDependencies_title()}
+			value={prefs.pinDependencyVersions}
+			set={set((value, prefs) => (prefs.pinDependencyVersions = value))}
+		>
+			{m.prefs_miscellaneous_pinDependencies_content()}
+		</TogglePref>
+
+		<TogglePref
 			label={m.prefs_miscellaneous_pullBeforeLaunch_title()}
 			value={prefs.pullBeforeLaunch}
 			set={set((value, prefs) => (prefs.pullBeforeLaunch = value))}

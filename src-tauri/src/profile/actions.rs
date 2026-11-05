@@ -180,7 +180,7 @@ impl Profile {
         let disabled_deps = self
             .get_mod(uuid)
             .ok()?
-            .dependencies(thunderstore)
+            .dependencies(thunderstore, true)
             .filter(|dep| {
                 self.get_mod(dep.package.uuid)
                     .is_ok_and(|profile_mod| !profile_mod.enabled)

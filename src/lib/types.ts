@@ -381,6 +381,8 @@ export type Prefs = {
 	hideReadmeH1: boolean;
 	/** Whether HTTP requests are allowed to go through the system proxy. */
 	useSystemProxy: boolean;
+	/** Whether dependencies are installed at exactly the version their parent mod names. */
+	pinDependencyVersions: boolean;
 };
 
 export enum Backends {

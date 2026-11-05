@@ -415,6 +415,8 @@
 	"prefs_miscellaneous_fetchMods_content_2": "若要手動觸發取得操作，請前往 ",
 	"prefs_miscellaneous_fetchMods_content_3": "檔案 > 取得模組",
 	"prefs_miscellaneous_fetchMods_title": "自動取得模組",
+	"prefs_miscellaneous_pinDependencies_content": "當 mod 指定了依賴的某個具體版本時，依該版本安裝，而不是安裝最新版。關閉後將一律安裝每個依賴的最新可用版本。",
+	"prefs_miscellaneous_pinDependencies_title": "嚴格按照依賴指定的版本",
 	"prefs_miscellaneous_pullBeforeLaunch_content": "是否要在啟動前從已同步的設定檔提取更新。",
 	"prefs_miscellaneous_pullBeforeLaunch_title": "啟動前提取",
 	"prefs_miscellaneous_systemProxy_content": "是否允許網路請求（取得、下載、同步 mod）經過系統代理。如果代理影響了 Gale 的正常使用，請關閉此項。",

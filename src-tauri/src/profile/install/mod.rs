@@ -262,7 +262,11 @@ fn total_download_size(
     queue: &queue::InstallQueueLock,
 ) -> u64 {
     profile
-        .missing_deps(borrowed.dependencies(), thunderstore)
+        .missing_deps(
+            borrowed.dependencies(),
+            thunderstore,
+            prefs.pin_dependency_versions,
+        )
         .chain(iter::once(borrowed))
         .filter(|borrowed| {
             !cache::path(borrowed.ident(), prefs).exists()

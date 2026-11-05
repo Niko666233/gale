@@ -207,6 +207,8 @@ impl InstallQueueLock<'_> {
         app: &AppHandle,
     ) -> Result<impl Future<Output = InstallResult<()>> + use<>> {
         let mods = {
+            let pin_versions = app.lock_prefs().pin_dependency_versions;
+
             let manager = app.lock_manager();
             let thunderstore = app.lock_thunderstore();
             let (_, profile) = manager.profile_by_id(profile_id)?;
@@ -223,7 +225,7 @@ impl InstallQueueLock<'_> {
 
                     Ok(iter::once(install).chain(
                         profile
-                            .missing_deps(borrowed.dependencies(), &thunderstore)
+                            .missing_deps(borrowed.dependencies(), &thunderstore, pin_versions)
                             .map(ModInstall::from),
                     ))
                 })

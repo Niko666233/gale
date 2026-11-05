@@ -171,8 +171,9 @@ impl ProfileMod {
     pub fn dependencies<'a>(
         &'a self,
         thunderstore: &'a Thunderstore,
+        pin_versions: bool,
     ) -> impl Iterator<Item = BorrowedMod<'a>> {
-        self.kind.dependencies(thunderstore)
+        self.kind.dependencies(thunderstore, pin_versions)
     }
 }
 
@@ -240,14 +241,16 @@ impl ProfileModKind {
     pub fn dependencies<'a>(
         &'a self,
         thunderstore: &'a Thunderstore,
+        pin_versions: bool,
     ) -> impl Iterator<Item = BorrowedMod<'a>> {
         self.direct_dependencies(thunderstore)
             .into_iter()
-            .flat_map(|dependency_idents| {
+            .flat_map(move |dependency_idents| {
                 thunderstore.dependencies(
                     dependency_idents
                         .iter()
                         .map(|ident| (ident, self.backend())),
+                    pin_versions,
                 )
             })
     }
@@ -323,7 +326,7 @@ impl Profile {
             .filter(move |other| other.uuid() != uuid)
             .filter(move |other| {
                 other
-                    .dependencies(thunderstore)
+                    .dependencies(thunderstore, true)
                     .any(|dep| dep.package.uuid == uuid)
             })
     }
@@ -334,9 +337,10 @@ impl Profile {
         &'a self,
         dependencies: impl IntoIterator<Item = (&'a VersionIdent, Backend)>,
         thunderstore: &'a Thunderstore,
+        pin_versions: bool,
     ) -> impl Iterator<Item = BorrowedMod<'a>> + 'a {
         thunderstore
-            .dependencies(dependencies)
+            .dependencies(dependencies, pin_versions)
             .filter(|dep| !self.has_mod(dep.package.uuid))
     }
 

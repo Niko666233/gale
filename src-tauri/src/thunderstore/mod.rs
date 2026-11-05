@@ -413,6 +413,9 @@ pub struct Dependencies<'a> {
     queue: VecDeque<(&'a VersionIdent, Backend)>,
     visited: HashSet<&'a str>,
     thunderstore: &'a Thunderstore,
+    /// When `false`, a dependency resolves to the newest available version of
+    /// its package instead of the exact version named in the dependency string.
+    pin_versions: bool,
 }
 
 impl<'a> Iterator for Dependencies<'a> {
@@ -421,10 +424,20 @@ impl<'a> Iterator for Dependencies<'a> {
     fn next(&mut self) -> Option<Self::Item> {
         loop {
             let (current_ident, preferred_backend) = self.queue.pop_front()?;
-            let Ok(current) = self
-                .thunderstore
-                .find_ident(current_ident, FromBackend::Prefer(preferred_backend))
-            else {
+
+            let current = if self.pin_versions {
+                self.thunderstore
+                    .find_ident(current_ident, FromBackend::Prefer(preferred_backend))
+            } else {
+                self.thunderstore
+                    .find_package(
+                        current_ident.full_name(),
+                        FromBackend::Prefer(preferred_backend),
+                    )
+                    .map(BorrowedMod::latest)
+            };
+
+            let Ok(current) = current else {
                 continue;
             };
 
@@ -461,6 +474,7 @@ impl Thunderstore {
     pub fn dependencies<'a>(
         &'a self,
         dependencies: impl IntoIterator<Item = (&'a VersionIdent, Backend)>,
+        pin_versions: bool,
     ) -> Dependencies<'a> {
         let queue = dependencies.into_iter().collect::<VecDeque<_>>();
         let mut visited = HashSet::with_capacity(queue.len());
@@ -472,6 +486,7 @@ impl Thunderstore {
             queue,
             visited,
             thunderstore: self,
+            pin_versions,
         }
     }
 }
