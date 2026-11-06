@@ -210,6 +210,8 @@ pub fn run() {
             profile::sync::commands::logout,
             profile::sync::commands::get_user,
             config::commands::get_config_files,
+            config::commands::get_config_text,
+            config::commands::set_config_text,
             config::commands::set_config_entry,
             config::commands::reset_config_entry,
             config::commands::reset_config_file,

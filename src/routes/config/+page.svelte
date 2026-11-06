@@ -5,6 +5,7 @@
 
 	import Button from '$lib/components/ui/Button.svelte';
 	import ConfigFileEditor from '$lib/components/config/ConfigFileEditor.svelte';
+	import ConfigTextEditor from '$lib/components/config/ConfigTextEditor.svelte';
 	import ProfileLockedBanner from '$lib/components/mod-list/ProfileLockedBanner.svelte';
 	import ConfigFileList from '$lib/components/config/ConfigFileList.svelte';
 	import profiles from '$lib/state/profile.svelte';
@@ -70,6 +71,8 @@
 					>
 						{m.config_unsupported_button()}
 					</Button>
+
+					<ConfigTextEditor file={selectedFile} locked={profiles.activeInstallAndConfigLocked} />
 				{:else if selectedFile.type === 'err'}
 					<div class="text-primary-500 dark:text-primary-400 mt-2 mb-1">
 						{m.config_err_content()}
@@ -85,6 +88,12 @@
 					>
 						{m.config_err_button()}
 					</Button>
+
+					<div class="text-primary-500 dark:text-primary-400 mt-4 mb-1">
+						{m.config_err_plainText()}
+					</div>
+
+					<ConfigTextEditor file={selectedFile} locked={profiles.activeInstallAndConfigLocked} />
 				{/if}
 			{:else if !config.loading}
 				<HelpCard title={m.config_content()} icon="mdi:config" class="h-full" />

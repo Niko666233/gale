@@ -1,5 +1,25 @@
 # Changelog
 
+## 1.23.3-3 (2026-11-06)
+
+Fork release — [Niko666233/gale](https://github.com/Niko666233/gale), still based on upstream 1.23.3.
+
+### Fixed
+
+- Config files whose accepted value range carries a step failed to parse. Mods that clamp a value emit `# Acceptable value range: From 100 to 500 in increments of 50`; the step was read as part of the maximum and produced `invalid maximum value '500 in increments of 50'`. Such files now open normally, keeping the range
+
+### Added
+
+- Config files in an unsupported format (`.ini`, and anything else the structured editor cannot read) can be edited as plain text inside Gale, with Save and Revert. _Open in external program_ is still available. Files that fail to parse fall back to the same editor, so a broken config no longer has to be fixed outside the app
+
+### Changed
+
+- _Install exact dependency versions_ is now **off by default**: unless it is turned on, a newly installed dependency gets the newest available version instead of the one named in the parent mod's dependency string
+
+### Notes
+
+- Everything in this release (code and documentation) was written by an AI assistant (Hermes Agent), then reviewed and tested by hand before publishing
+
 ## 1.23.3-2 (2026-10-31)
 
 Fork release — [Niko666233/gale](https://github.com/Niko666233/gale), still based on upstream 1.23.3.

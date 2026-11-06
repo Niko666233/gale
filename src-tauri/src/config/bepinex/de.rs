@@ -322,6 +322,13 @@ impl<R: Read + BufRead> Parser<R> {
                     let (min, max) = range
                         .split_once(" to ")
                         .ok_or_eyre("expected value range")?;
+
+                    // some mods append a step to the range, e.g.
+                    // "From 0 to 1 in increments of 0.05"
+                    let max = max
+                        .split_once(" in increments of ")
+                        .map_or(max, |(max, _step)| max);
+
                     builder.range = Some((min.to_owned(), max.to_owned()));
                 }
             } else {

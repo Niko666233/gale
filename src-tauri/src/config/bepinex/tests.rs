@@ -211,3 +211,52 @@ fn check_from_string() {
 
     assert_eq!(left, right);
 }
+
+/// Some mods append a step to the acceptable value range, which used to make
+/// the maximum value fail to parse.
+#[test]
+fn check_range_with_increments() {
+    let text = r###"## Settings file was created by plugin Plugin v1.0.0
+## Plugin GUID: Author.PluginGuid
+
+[Section1]
+
+## This is entry 1
+# Setting type: Int32
+# Default value: 500
+# Acceptable value range: From 100 to 500 in increments of 50
+Entry1 = 500
+
+## This is entry 2
+# Setting type: Single
+# Default value: 0.5
+# Acceptable value range: From 0 to 1 in increments of 0.05
+Entry2 = 0.5
+
+"###;
+
+    let file = de::from_reader(text.as_bytes()).unwrap();
+    let entries = &file.sections[0].entries;
+
+    match &entries[0] {
+        EntryKind::Normal(entry) => assert_eq!(
+            entry.value,
+            Value::Int32(Num {
+                value: 500,
+                range: Some(100..500),
+            })
+        ),
+        other => panic!("unexpected entry kind: {other:?}"),
+    }
+
+    match &entries[1] {
+        EntryKind::Normal(entry) => assert_eq!(
+            entry.value,
+            Value::Single(Num {
+                value: 0.5,
+                range: Some(0.0..1.0),
+            })
+        ),
+        other => panic!("unexpected entry kind: {other:?}"),
+    }
+}

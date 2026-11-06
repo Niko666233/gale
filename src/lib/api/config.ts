@@ -23,5 +23,9 @@ export const resetAll = (file: BaseConfigFile) =>
 	});
 export const openFile = (file: BaseConfigFile) =>
 	invoke('open_config_file', { file: file.relativePath });
+export const getText = (file: BaseConfigFile) =>
+	invoke<string>('get_config_text', { file: file.relativePath });
+export const setText = (file: BaseConfigFile, content: string) =>
+	invoke('set_config_text', { file: file.relativePath, content });
 export const deleteFile = (file: BaseConfigFile) =>
 	invoke('delete_config_file', { file: file.relativePath });

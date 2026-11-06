@@ -263,7 +263,7 @@ impl Default for Prefs {
 
             hide_readme_h1: false,
             use_system_proxy: true,
-            pin_dependency_versions: true,
+            pin_dependency_versions: false,
 
             game_prefs: HashMap::new(),
         }

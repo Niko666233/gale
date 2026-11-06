@@ -323,6 +323,10 @@ impl ConfigCache {
             .collect()
     }
 
+    pub fn contains_file(&self, file: &Path) -> bool {
+        self.0.iter().any(|f| f.relative_path == file)
+    }
+
     fn find_file(&mut self, file: &Path) -> Result<&mut AnyFile> {
         self.0
             .iter_mut()

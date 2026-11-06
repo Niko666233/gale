@@ -1,10 +1,10 @@
-use std::path::Path;
+use std::{fs, path::Path};
 
 use eyre::{Context, eyre};
 use tauri::{AppHandle, command};
 
 use super::{AnyFileKind, frontend};
-use crate::{state::ManagerExt, util::cmd::Result};
+use crate::{state::ManagerExt, util::{cmd::Result, error::IoResultExt}};
 
 #[command]
 pub fn get_config_files(app: AppHandle) -> Result<Vec<frontend::File>> {
@@ -73,6 +73,40 @@ pub fn reset_config_file(file: &Path, app: AppHandle) -> Result<()> {
     }
 
     file.write(&profile.path).context("failed to write file")?;
+    Ok(())
+}
+
+/// Reads a config file that the structured editor cannot handle (or failed to
+/// parse) so it can be edited as plain text.
+#[command]
+pub fn get_config_text(file: &Path, app: AppHandle) -> Result<String> {
+    let manager = app.lock_manager();
+    let profile = manager.active_profile();
+
+    if !profile.config_cache.contains_file(file) {
+        return Err(eyre!("file is not a known config file").into());
+    }
+
+    let path = profile.path.join(file);
+    let text = fs::read_to_string(&path).fs_context("reading config file", &path)?;
+
+    Ok(text)
+}
+
+/// Writes a plain text config file back to disk.
+#[command]
+pub fn set_config_text(file: &Path, content: String, app: AppHandle) -> Result<()> {
+    let mut manager = app.lock_manager();
+    let profile = manager.active_profile_mut();
+
+    if !profile.config_cache.contains_file(file) {
+        return Err(eyre!("file is not a known config file").into());
+    }
+
+    let path = profile.path.join(file);
+    fs::write(&path, content).fs_context("writing config file", &path)?;
+
+    // the modified time changed, so the next refresh re-reads it
     Ok(())
 }
 

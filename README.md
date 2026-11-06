@@ -20,11 +20,12 @@ A powerful mod manager for [Thunderstore](https://thunderstore.io), built with [
 
 This is a personal fork of [Kesomannen/gale](https://github.com/Kesomannen/gale), maintained by [Niko666233](https://github.com/Niko666233). It is **not** affiliated with upstream, nothing here is submitted upstream, and builds are only published in this repository's [Releases](https://github.com/Niko666233/gale/releases) (grab `Gale_X.X.X_x64_en-US.msi` there).
 
-Three additions on top of upstream `1.23.3`:
+Four additions on top of upstream `1.23.3`:
 
 - **Level 1 readme headings can be shown again.** Upstream deliberately strips Markdown `# Heading` lines from the mod readme preview (see [issue #549](https://github.com/Kesomannen/gale/issues/549)). Here it is a setting: _Settings → Appearance → Hide readme level 1 headings_. It is **off by default**, so `# Heading` lines are displayed like any other heading.
 - **The system proxy can be turned off.** Upstream always lets HTTP requests use the system proxy (environment variables, and on Windows the system registry settings). Here it is a setting: _Settings → Miscellaneous → Use system proxy_. It is **on by default**, which matches upstream's behaviour; turn it off to make Gale connect directly.
-- **Dependency versions can be unpinned.** Upstream installs a dependency at the exact version named in the parent mod's dependency string, even when a newer release exists. Here it is a setting: _Settings → Miscellaneous → Install exact dependency versions_. It is **on by default**, which matches upstream's behaviour; turn it off to install the newest available version of each newly installed dependency. Dependencies that are already installed are left alone either way.
+- **Dependency versions can be unpinned.** Upstream installs a dependency at the exact version named in the parent mod's dependency string, even when a newer release exists. Here it is a setting: _Settings → Miscellaneous → Install exact dependency versions_. It is **off by default** — turn it on to install the exact version named in the dependency string instead of the newest available one. Dependencies that are already installed are left alone either way.
+- **Config files can be edited as plain text.** Files the structured editor cannot handle (`.ini`, and anything else it does not understand) open in a plain-text editor with Save and Revert, next to the existing _Open in external program_ button. Config files that fail to parse use the same editor, so a single bad line no longer forces you out of the app. Accepted value ranges that carry a step (`From 100 to 500 in increments of 50`) are read correctly, too.
 
 The in-app updater has been repointed from the upstream gist to this fork's `latest.json`, and signs with a fork-specific key. That way it will not offer or install upstream builds, which would silently remove these changes.
 
