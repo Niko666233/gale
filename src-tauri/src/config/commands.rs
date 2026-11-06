@@ -104,6 +104,15 @@ pub fn set_config_text(file: &Path, content: String, app: AppHandle) -> Result<(
     }
 
     let path = profile.path.join(file);
+
+    // the webview hands us "\n" line breaks, so restore the file's own convention
+    let uses_crlf = fs::read_to_string(&path).is_ok_and(|text| text.contains("\r\n"));
+    let content = if uses_crlf {
+        content.replace('\r', "").replace('\n', "\r\n")
+    } else {
+        content
+    };
+
     fs::write(&path, content).fs_context("writing config file", &path)?;
 
     // the modified time changed, so the next refresh re-reads it
